@@ -32,7 +32,7 @@ export function Header() {
           </div>
         </div>
 
-        {/* Center - Current role indicator */}
+      
         <div className="flex items-center gap-2">
           <Badge variant={currentRole === "lead" ? "default" : "secondary"} className="flex items-center gap-1">
             <UserCheck className="h-3 w-3" />
@@ -40,7 +40,7 @@ export function Header() {
           </Badge>
         </div>
 
-        {/* Right side - User info, role toggle, and dark mode toggle */}
+        
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-3">
             <Avatar className="h-8 w-8">

@@ -1,17 +1,13 @@
 "use client"
 
-import type React from "react"
 import { useState } from "react"
 import { useTeam } from "../contexts/TeamContext"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
-import { Calendar } from "./ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
-import { CalendarIcon, Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 import { format } from "date-fns"
-import { cn } from "../lib/utils"
 
 export function TaskForm() {
   const { state, dispatch } = useTeam()
@@ -19,18 +15,14 @@ export function TaskForm() {
 
   const [selectedMember, setSelectedMember] = useState<string>("")
   const [taskTitle, setTaskTitle] = useState("")
-  const [dueDate, setDueDate] = useState<Date>()
+  const [dueDate, setDueDate] = useState<string>("") // store date as yyyy-MM-dd
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-
-    if (!selectedMember || !taskTitle || !dueDate) {
-      return
-    }
+    if (!selectedMember || !taskTitle || !dueDate) return
 
     setIsSubmitting(true)
-
     try {
       dispatch({
         type: "ADD_TASK",
@@ -38,7 +30,7 @@ export function TaskForm() {
           memberId: Number.parseInt(selectedMember),
           task: {
             title: taskTitle,
-            dueDate: format(dueDate, "yyyy-MM-dd"),
+            dueDate, // already in yyyy-MM-dd
             progress: 0,
           },
         },
@@ -47,13 +39,14 @@ export function TaskForm() {
       // Reset form
       setSelectedMember("")
       setTaskTitle("")
-      setDueDate(undefined)
-    } catch (error) {
-      console.error("Error adding task:", error)
+      setDueDate("")
     } finally {
       setIsSubmitting(false)
     }
   }
+
+  // minimum selectable date = today
+  const today = format(new Date(), "yyyy-MM-dd")
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -67,17 +60,7 @@ export function TaskForm() {
           <SelectContent>
             {members.map((member) => (
               <SelectItem key={member.id} value={member.id.toString()}>
-                <div className="flex items-center gap-2">
-                  <div
-                    className={cn("w-2 h-2 rounded-full", {
-                      "bg-green-400": member.status === "working",
-                      "bg-yellow-400": member.status === "break",
-                      "bg-blue-400": member.status === "meeting",
-                      "bg-gray-400": member.status === "offline",
-                    })}
-                  />
-                  {member.name}
-                </div>
+                {member.name}
               </SelectItem>
             ))}
           </SelectContent>
@@ -98,31 +81,23 @@ export function TaskForm() {
 
       {/* Due Date */}
       <div className="space-y-2">
-        <Label>Due Date</Label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className={cn("w-full justify-start text-left font-normal", !dueDate && "text-muted-foreground")}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {dueDate ? format(dueDate, "PPP") : "Pick a date"}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={dueDate}
-              onSelect={setDueDate}
-              disabled={(date) => date < new Date()}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
+        <Label htmlFor="due-date">Due Date</Label>
+        <Input
+          id="due-date"
+          type="date"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+          min={today}
+          required
+        />
       </div>
 
-      {/* Submit Button */}
-      <Button type="submit" className="w-full" disabled={!selectedMember || !taskTitle || !dueDate || isSubmitting}>
+      {/* Submit */}
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={!selectedMember || !taskTitle || !dueDate || isSubmitting}
+      >
         <Plus className="mr-2 h-4 w-4" />
         {isSubmitting ? "Assigning..." : "Assign Task"}
       </Button>

@@ -14,10 +14,10 @@ export function TeamLeadDashboard() {
   const { state, dispatch } = useTeam()
   const { members, statusFilter } = state
 
-  // Filter members based on status filter
+
   const filteredMembers = statusFilter === "all" ? members : members.filter((member) => member.status === statusFilter)
 
-  // Sort members by number of active tasks (not completed)
+ 
   const sortedMembers = [...filteredMembers].sort((a, b) => {
     const aActiveTasks = a.tasks.filter((task) => task.progress < 100).length
     const bActiveTasks = b.tasks.filter((task) => task.progress < 100).length
@@ -37,7 +37,7 @@ export function TeamLeadDashboard() {
 
   return (
     <div className="space-y-8">
-      {/* Page Header */}
+      
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Team Lead Dashboard</h1>
@@ -51,15 +51,15 @@ export function TeamLeadDashboard() {
         </div>
       </div>
 
-      {/* Status Summary Cards */}
+      
       <StatusSummary />
 
-      {/* Status Pie Chart */}
-      {/* Removed Card wrapper since the new component includes its own styling */}
+    
+      
       <StatusPieChart data={statusData} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Team Reports Summary */}
+       
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -92,9 +92,9 @@ export function TeamLeadDashboard() {
         </Card>
       </div>
 
-      {/* Main Content Grid */}
+     
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Team Members List */}
+       
         <div className="lg:col-span-2 space-y-6">
           <Card>
             <CardHeader>
@@ -136,7 +136,7 @@ export function TeamLeadDashboard() {
           </Card>
         </div>
 
-        {/* Task Assignment Form and Quick Stats */}
+       
         <div className="space-y-6">
           <Card>
             <CardHeader>
@@ -151,7 +151,7 @@ export function TeamLeadDashboard() {
             </CardContent>
           </Card>
 
-          {/* Quick Stats */}
+     
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">

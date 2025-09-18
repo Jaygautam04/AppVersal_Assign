@@ -19,7 +19,7 @@ export function ActivityTracker() {
       timeoutId = setTimeout(() => {
         dispatch({ type: "SET_INACTIVE" })
 
-        // Find current user and set to offline if not already
+     
         const currentMember = members.find((member) => member.name === currentUser)
         if (currentMember && currentMember.status !== "offline") {
           dispatch({
@@ -33,14 +33,14 @@ export function ActivityTracker() {
       }, INACTIVITY_TIMEOUT)
     }
 
-    // Track user activity
+   
     const events = ["mousedown", "mousemove", "keypress", "scroll", "touchstart", "click"]
 
     events.forEach((event) => {
       document.addEventListener(event, resetInactivityTimer, true)
     })
 
-    // Initialize timer
+    
     resetInactivityTimer()
 
     return () => {
@@ -51,5 +51,5 @@ export function ActivityTracker() {
     }
   }, [dispatch, currentUser, members])
 
-  return null // This component doesn't render anything
+  return null 
 }

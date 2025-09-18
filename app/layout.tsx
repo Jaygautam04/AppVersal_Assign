@@ -5,7 +5,7 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "Team Pulse Dashboard",
   description: "Productivity monitoring tool for internal teams",
-  generator: "v0.app",
+  generator: "Team Pulse Dashboard",
 }
 
 import ClientLayout from "./ClientLayout"

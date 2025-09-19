@@ -63,18 +63,18 @@ cd team-pulse-dashboard
 
 ## 📸 Screenshots / Demo
 
-### Screenshot 68
+### Screenshot 01
 ![Screenshot 68](screenshots/Screenshot%20%2868%29.png)
 
-### Screenshot 69
+### Screenshot 02
 ![Screenshot 69](screenshots/Screenshot%20%2869%29.png)
 
-### Screenshot 70
+### Screenshot 03
 ![Screenshot 70](screenshots/Screenshot%20%2870%29.png)
 
-### Screenshot 71
+### Screenshot 04
 ![Screenshot 71](screenshots/Screenshot%20%2871%29.png)
 
-### Screenshot 72
+### Screenshot 05
 ![Screenshot 72](screenshots/Screenshot%20%2872%29.png)
 
